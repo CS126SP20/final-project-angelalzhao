@@ -12,4 +12,5 @@ Leaderboard::Leaderboard(const std::string& db_path) : db_{db_path} {
          "  score INTEGER NOT NULL\n"
          ");";
 }
+
 } // namespace game

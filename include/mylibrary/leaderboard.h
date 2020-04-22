@@ -13,9 +13,11 @@ namespace game {
 
 class Leaderboard {
  public:
+  // Initializes the database
   explicit Leaderboard(const std::string& db_path);
 
  private:
+  // Database containing scores/data from past games
   sqlite::database db_;
 };
 

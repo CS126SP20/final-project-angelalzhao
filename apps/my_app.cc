@@ -6,7 +6,6 @@
 #include <cinder/app/App.h>
 #include <cinder/gl/gl.h>
 #include <cinder/Color.h>
-#include <sqlite_modern_cpp.h>
 
 
 namespace myapp {
@@ -14,7 +13,7 @@ namespace myapp {
 using cinder::app::KeyEvent;
 
 MyApp::MyApp()
-  : leaderboard_{"gay.db"} {}
+  : leaderboard_{"game.db"} {}
 
 void MyApp::setup() {
 
@@ -30,6 +29,7 @@ void MyApp::DrawBackground() const {
   cinder::gl::clear(cinder::Color(0.75, 1, 0.75));
 }
 
-void MyApp::keyDown(KeyEvent event) { }
+void MyApp::keyDown(KeyEvent event) {
+}
 
 }  // namespace myapp
