@@ -9,6 +9,12 @@
 
 namespace myapp {
 
+enum class GameState {
+  kLevelSelect,
+  kPlaying,
+  kGameEnded,
+};
+
 class MyApp : public cinder::app::App {
  public:
   MyApp();
@@ -19,6 +25,8 @@ class MyApp : public cinder::app::App {
 
  private:
   game::Leaderboard leaderboard_;
+  int level_;
+  GameState state_;
 
  private:
   void DrawBackground() const;

@@ -13,7 +13,9 @@ namespace myapp {
 using cinder::app::KeyEvent;
 
 MyApp::MyApp()
-  : leaderboard_{"game.db"} {}
+  : leaderboard_{"game.db"},
+    state_{GameState::kLevelSelect},
+    level_{0} {}
 
 void MyApp::setup() {
 
@@ -30,6 +32,12 @@ void MyApp::DrawBackground() const {
 }
 
 void MyApp::keyDown(KeyEvent event) {
+  if (state_ == GameState::kLevelSelect) {
+    // TODO: Get rid of magic numbers? Declare as constants somewhere
+    if (event.getChar() >= '1' && event.getChar() <= '3') {
+      level_ = event.getChar() - '0';
+    }
+  }
 }
 
 }  // namespace myapp
