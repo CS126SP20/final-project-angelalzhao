@@ -11,6 +11,7 @@ namespace myapp {
 
 enum class GameState {
   kLevelSelect,
+  kGameStart,
   kPlaying,
   kGameEnded,
 };
@@ -30,6 +31,7 @@ class MyApp : public cinder::app::App {
 
  private:
   void DrawBackground() const;
+  void DrawMenu();
 };
 
 }  // namespace myapp

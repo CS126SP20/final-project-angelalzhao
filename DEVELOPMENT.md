@@ -7,3 +7,6 @@
 
 - **4/23/20** Began working on level selection menu/logic
 - Still need to display menu text
+
+- **4/24/20** Displayed menu text
+- User can now select their difficulty level and press S to begin the game
