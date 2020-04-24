@@ -14,7 +14,7 @@ namespace myapp {
 using cinder::app::KeyEvent;
 
 MyApp::MyApp()
-  : leaderboard_{"game.db"},
+  : leaderboard_{cinder::app::getAssetPath("game.db").string()},
     state_{GameState::kLevelSelect},
     level_{0} {}
 

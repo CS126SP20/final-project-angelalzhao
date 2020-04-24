@@ -8,8 +8,9 @@ namespace game {
 
 Leaderboard::Leaderboard(const std::string& db_path) : db_{db_path} {
   db_ << "CREATE TABLE if not exists leaderboard (\n"
-         "  name  TEXT NOT NULL,\n"
-         "  score INTEGER NOT NULL\n"
+         "  date  TEXT NOT NULL,\n"
+         "  score INTEGER NOT NULL,\n"
+         "  level INTEGER NOT NULL\n"
          ");";
 }
 

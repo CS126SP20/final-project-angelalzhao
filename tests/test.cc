@@ -4,8 +4,6 @@
 
 #include <catch2/catch.hpp>
 
-
-
 TEST_CASE("Random sanity test", "[random]") {
   REQUIRE(1 == 1);
 }
