@@ -28,6 +28,9 @@ void MyApp::draw() {
   if (state_ == GameState::kLevelSelect) {
     DrawMenu();
   }
+  if (state_ == GameState::kGameStart) {
+    cinder::gl::clear();
+  }
 }
 
 void PrintText(const std::string& text, const cinder::Color& color,

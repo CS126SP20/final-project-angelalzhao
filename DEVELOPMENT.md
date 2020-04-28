@@ -10,3 +10,7 @@
 
 - **4/24/20** Displayed menu text
 - User can now select their difficulty level and press S to begin the game
+
+- **4/26/20** Started working on game logic
+- Started working on creating tiles
+- Still need to create the board/game engine
