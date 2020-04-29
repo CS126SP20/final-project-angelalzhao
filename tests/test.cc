@@ -5,6 +5,7 @@
 #include <catch2/catch.hpp>
 
 #include <mylibrary/tile.h>
+#include <mylibrary/board.h>
 #include <cinder/Color.h>
 #include <vector>
 
@@ -41,4 +42,14 @@ TEST_CASE("Swap two tiles", "[tile]") {
   REQUIRE(tiles[1].GetCorrectCol() == 0);
   REQUIRE(!tiles[0].CanTileMove());
   REQUIRE(tiles[1].CanTileMove());
+}
+
+// Test Board class logic
+TEST_CASE("Set size", "[board]") {
+  game::Board board;
+  REQUIRE(board.GetSize() == 0);
+  SECTION("SetSize() should change size") {
+    board.SetSize(1);
+    REQUIRE(board.GetSize() > 0);
+  }
 }

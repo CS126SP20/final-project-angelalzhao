@@ -14,3 +14,7 @@
 - **4/26/20** Started working on game logic
 - Started working on creating tiles
 - Still need to create the board/game engine
+
+- **4/28/20** Started working on the board class
+- Implemented creating a board, setting size
+- Still need to work on color selection, gradient generation, shuffling, swapping
