@@ -18,3 +18,5 @@
 - **4/28/20** Started working on the board class
 - Implemented creating a board, setting size
 - Still need to work on color selection, gradient generation, shuffling, swapping
+
+- **4/29/20** Implemented function that draws the board in it's current state

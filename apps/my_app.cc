@@ -2,11 +2,13 @@
 
 #include "my_app.h"
 
+#include <mylibrary/tile.h>
 
 #include <cinder/app/App.h>
 #include <cinder/gl/gl.h>
 #include <cinder/Color.h>
 #include <cinder/Text.h>
+#include <cinder/Rect.h>
 
 
 namespace myapp {
@@ -19,10 +21,19 @@ MyApp::MyApp()
     level_{0} {}
 
 void MyApp::setup() {
-
 }
 
-void MyApp::update() { }
+void MyApp::update() {
+  if (state_ == GameState::kGameStart) {
+    board_.SetSize(level_);
+    // TODO: Add random color generation logic here
+    // Setting every corner color to white for testing purposes
+    const cinder::Color white = cinder::Color::white();
+    const cinder::Color gray = cinder::Color::gray(0.5);
+    board_.SetColors(white, gray, white, gray);
+    state_ = GameState::kPlaying;
+  }
+}
 
 void MyApp::draw() {
   if (state_ == GameState::kLevelSelect) {
@@ -30,6 +41,9 @@ void MyApp::draw() {
   }
   if (state_ == GameState::kGameStart) {
     cinder::gl::clear();
+  }
+  if (state_ == GameState::kPlaying) {
+    DrawBoard();
   }
 }
 
@@ -78,6 +92,21 @@ void MyApp::DrawMenu() {
     PrintText("3: hard", gray, size,{center.x, center.y + 100});
   } else {
     PrintText("3: hard", white, size, {center.x, center.y + 100});
+  }
+}
+
+void MyApp::DrawBoard() {
+  int tile_width = getWindowWidth() / board_.GetSize();
+  int tile_height = getWindowHeight() / board_.GetSize();
+  for (int row = 0; row < board_.GetSize(); row++) {
+    for (int col = 0; col < board_.GetSize(); col++) {
+      game::Tile current_tile = board_.GetTileAt(row, col);
+      cinder::gl::color(current_tile.GetColor());
+      cinder::gl::drawSolidRect(cinder::Rectf(tile_width * col,
+                                      tile_height * row,
+                                      tile_width * col + tile_width,
+                                      tile_height * row + tile_height));
+    }
   }
 }
 

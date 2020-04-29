@@ -4,6 +4,7 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <mylibrary/leaderboard.h>
+#include <mylibrary/board.h>
 #include <cinder/app/App.h>
 
 
@@ -28,10 +29,12 @@ class MyApp : public cinder::app::App {
   game::Leaderboard leaderboard_;
   int level_;
   GameState state_;
+  game::Board board_;
 
  private:
   void DrawBackground() const;
   void DrawMenu();
+  void DrawBoard();
 };
 
 }  // namespace myapp
