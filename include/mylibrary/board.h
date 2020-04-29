@@ -7,6 +7,7 @@
 
 #include "tile.h"
 #include <vector>
+#include <cinder/Color.h>
 
 namespace game {
 
@@ -14,10 +15,17 @@ class Board {
  public:
   // Default constructor
   Board();
-  // Sets the size of the board based on difficulty level
+  // Sets the size of the board based on difficulty (level must be positive)
   void SetSize(int level);
+  // Sets the corner tiles based on the colors passed in
+  // Creates new tiles arranged in the correct gradient pattern
+  void SetColors(const cinder::Color& top_left, const cinder::Color& top_right,
+                const cinder::Color& bottom_right,
+                const cinder::Color& bottom_left);
   // Returns the size of the board
   int GetSize() const;
+  // Returns the tile at the specified location (row, col must >= 0)
+  game::Tile GetTileAt(int row, int col) const;
 
  private:
   // 2D vector of tiles representing the board's current state

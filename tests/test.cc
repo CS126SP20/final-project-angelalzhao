@@ -53,3 +53,14 @@ TEST_CASE("Set size", "[board]") {
     REQUIRE(board.GetSize() > 0);
   }
 }
+
+TEST_CASE("Set colors", "[board]") {
+  const cinder::Color white = cinder::Color::white();
+  game::Board board;
+  board.SetSize(1);
+  board.SetColors(white, white, white, white);
+  REQUIRE(!board.GetTileAt(0, 0).CanTileMove());
+  REQUIRE(board.GetTileAt(0, 0).GetColor() == white);
+  REQUIRE(board.GetTileAt(0, 0).GetCorrectRow() == 0);
+  REQUIRE(board.GetTileAt(0, 0).GetCorrectCol() == 0);
+}
