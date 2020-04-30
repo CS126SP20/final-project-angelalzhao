@@ -3,12 +3,14 @@
 #include "my_app.h"
 
 #include <mylibrary/tile.h>
+#include <mylibrary/utils.h>
 
 #include <cinder/app/App.h>
 #include <cinder/gl/gl.h>
 #include <cinder/Color.h>
 #include <cinder/Text.h>
 #include <cinder/Rect.h>
+#include <vector>
 
 
 namespace myapp {
@@ -27,10 +29,9 @@ void MyApp::update() {
   if (state_ == GameState::kGameStart) {
     board_.SetSize(level_);
     // TODO: Add random color generation logic here
-    // Setting every corner color to white for testing purposes
-    const cinder::Color white = cinder::Color::white();
-    const cinder::Color gray = cinder::Color::gray(0.5);
-    board_.SetColors(white, gray, white, gray);
+    // Setting every corner color to white/gray for testing purposes
+    std::vector<cinder::Color> colors = utils::GetRandomColors(4);
+    board_.SetColors(colors[0], colors[1],colors[2], colors[3]);
     state_ = GameState::kPlaying;
   }
 }
