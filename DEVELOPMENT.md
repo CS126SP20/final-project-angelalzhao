@@ -22,3 +22,4 @@
 - **4/29/20** Implemented function that draws the board in it's current state
 
 - **4/30/20** Started work on generating and displaying colors
+- Generated and displayed gradient

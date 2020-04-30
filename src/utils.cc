@@ -23,4 +23,24 @@ std::vector<cinder::Color> GetRandomColors(int num_colors) {
   return colors;
 }
 
+cinder::Color GetGradientColor(const cinder::Color& first,
+                               const cinder::Color& second, int index,
+                               int last_index) {
+  // Finding the difference in r, g, b values between the two colors
+  float diff_r = second.r - first.r;
+  float diff_g = second.g - first.g;
+  float diff_b = second.b - first.b;
+  // Calculating the "multiplier", or how much the new color differs from the
+  // first color
+  float multiplier = (float) index / last_index;
+  // Calculating the r, g, b values of the new gradient color by linear map
+  // from values in first to values in second
+  float new_r = first.r + diff_r * multiplier;
+  float new_g = first.g + diff_g * multiplier;
+  float new_b = first.g + diff_b * multiplier;
+  // Create/return the new color
+  cinder::Color color(new_r, new_g, new_b);
+  return color;
+}
+
 } // namespace utils

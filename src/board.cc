@@ -3,6 +3,7 @@
 //
 
 #include "mylibrary/board.h"
+#include "mylibrary/utils.h"
 
 namespace game {
 
@@ -48,6 +49,41 @@ void Board::SetColors(const cinder::Color& top_left,
   tiles_[0][size_ - 1] = tr;
   tiles_[size_ - 1][size_ - 1] = br;
   tiles_[size_ - 1][0] = bl;
+  // Set up gradient
+  CreateGradient();
 }
 
+void Board::CreateGradient() {
+  // Creating and placing tiles in the leftmost and rightmost columns
+  for (int row = 1; row < size_ - 1; row ++) {
+    // Generating gradient for left column
+    cinder::Color tl_color = tiles_[0][0].GetColor();
+    cinder::Color bl_color = tiles_[size_ - 1][0].GetColor();
+    cinder::Color left_color = utils::GetGradientColor(tl_color, bl_color,
+                                                       row, size_ - 1);
+    // Generating gradient for right column
+    cinder::Color tr_color = tiles_[0][size_ - 1].GetColor();
+    cinder::Color br_color = tiles_[size_ - 1][size_ - 1].GetColor();
+    cinder::Color right_color = utils::GetGradientColor(tr_color, br_color,
+                                                        row, size_ - 1);
+    // Creating tiles for the right and left side
+    game::Tile left_tile(left_color, row, 0, true);
+    game::Tile right_tile(right_color, row, size_ - 1, true);
+    // Placing the tiles
+    tiles_[row][0] = left_tile;
+    tiles_[row][size_ - 1] = right_tile;
+  }
+  // Creating/placing the rest of the tiles
+  for (int col = 1; col < size_ - 1; col++) {
+
+    for (int row = 0; row < size_; row++) {
+      cinder::Color left_color = tiles_[row][0].GetColor();
+      cinder::Color right_color = tiles_[row][size_ - 1].GetColor();
+      cinder::Color gradient_color = utils::GetGradientColor(left_color,
+                                     right_color, col, size_ - 1);
+      game::Tile tile(gradient_color, row, col, true);
+      tiles_[row][col] = tile;
+    }
+  }
+}
 } // namespace game

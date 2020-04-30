@@ -32,6 +32,9 @@ class Board {
   std::vector<std::vector<game::Tile>> tiles_;
   // The size of the board
   int size_;
+  // Creates and places non-corner tiles in gradient pattern
+  // Called after corner tiles are placed
+  void CreateGradient();
 };
 
 }
