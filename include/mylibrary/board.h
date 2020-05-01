@@ -35,6 +35,8 @@ class Board {
   // Swaps the two selected tiles (should only be called when two tiles are
   // selected)
   void Swap();
+  // Checks if the board is solved (all tiles match with their correct location)
+  bool IsBoardSolved();
 
  private:
   // 2D vector of tiles representing the board's current state

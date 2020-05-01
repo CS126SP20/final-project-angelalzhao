@@ -118,3 +118,25 @@ TEST_CASE("Swapping two tiles", "[board]") {
   REQUIRE(board.GetTileAt(0, 1).GetCorrectRow() == 1);
   REQUIRE(board.GetTileAt(0, 1).GetCorrectCol() == 0);
 }
+
+TEST_CASE("IsBoardSolved", "[board]") {
+  cinder::Color white = cinder::Color::white();
+  game::Board board;
+  board.SetSize(2);
+  board.SetColors(white, white, white, white);
+  REQUIRE(board.IsBoardSolved());
+  SECTION("Swapping two tiles") {
+    board.Select(0, 1);
+    board.Select(1, 1);
+    board.Swap();
+    REQUIRE_FALSE(board.IsBoardSolved());
+  }
+  SECTION("Swap tiles and swap back") {
+    for (int i = 0; i < 2; i++) {
+      board.Select(0, 1);
+      board.Select(1, 1);
+      board.Swap();
+    }
+    REQUIRE(board.IsBoardSolved());
+  }
+}

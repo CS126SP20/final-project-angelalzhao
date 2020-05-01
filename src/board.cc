@@ -126,4 +126,17 @@ bool Board::CanSelect(int row, int col) {
   return selected_row != row || selected_col != col;
 }
 
+bool Board::IsBoardSolved() {
+  // Checks that each tile's actual row and column match expected row/column
+  for (int row = 0; row < size_; row++) {
+    for (int col = 0; col < size_; col++) {
+      game::Tile current_tile = tiles_[row][col];
+      if (current_tile.GetCorrectRow() != row
+          || current_tile.GetCorrectCol() != col) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
 } // namespace game
