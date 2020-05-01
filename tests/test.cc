@@ -103,3 +103,18 @@ TEST_CASE("Try to select 3 tiles", "[board]") {
   board.Select(1, 1);
   REQUIRE(board.NumSelected() == 2);
 }
+
+TEST_CASE("Swapping two tiles", "[board]") {
+  const cinder::Color black = cinder::Color::black();
+  game::Board board;
+  board.SetSize(2);
+  board.SetColors(black, black, black, black);
+  board.Select(1, 0);
+  board.Select(0, 1);
+  board.Swap();
+  REQUIRE(board.NumSelected() == 0);
+  REQUIRE(board.GetTileAt(1, 0).GetCorrectRow() == 0);
+  REQUIRE(board.GetTileAt(1, 0).GetCorrectCol() == 1);
+  REQUIRE(board.GetTileAt(0, 1).GetCorrectRow() == 1);
+  REQUIRE(board.GetTileAt(0, 1).GetCorrectCol() == 0);
+}

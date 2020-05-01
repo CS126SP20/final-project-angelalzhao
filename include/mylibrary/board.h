@@ -31,7 +31,10 @@ class Board {
   // current row/column to selected_
   void Select(int row, int col);
   // Returns the number of tiles selected (should be no more than 2)
-  int NumSelected();
+  int NumSelected() const;
+  // Swaps the two selected tiles (should only be called when two tiles are
+  // selected)
+  void Swap();
 
  private:
   // 2D vector of tiles representing the board's current state

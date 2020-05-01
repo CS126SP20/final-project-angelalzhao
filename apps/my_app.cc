@@ -16,6 +16,7 @@
 namespace myapp {
 
 using cinder::app::KeyEvent;
+using cinder::app::MouseEvent;
 
 MyApp::MyApp()
   : leaderboard_{cinder::app::getAssetPath("game.db").string()},
@@ -119,6 +120,19 @@ void MyApp::keyDown(KeyEvent event) {
     }
     if (event.getCode() == KeyEvent::KEY_s && level_ != 0) {
       state_ = GameState::kGameStart;
+    }
+  }
+}
+
+void MyApp::mouseDown(MouseEvent event) {
+  if (state_ == GameState::kPlaying) {
+    int tile_width = getWindowWidth() / board_.GetSize();
+    int tile_height = getWindowHeight() / board_.GetSize();
+    int row = event.getY() / tile_height;
+    int col = event.getX() / tile_width;
+    board_.Select(row, col);
+    if (board_.NumSelected() == 2) {
+      board_.Swap();
     }
   }
 }

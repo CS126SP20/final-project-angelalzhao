@@ -95,7 +95,17 @@ void Board::Select(int row, int col) {
   selected_.push_back(tile_loc);
 }
 
-int Board::NumSelected() { return selected_.size(); }
+int Board::NumSelected() const { return selected_.size(); }
+
+void Board::Swap() {
+  // Swapping the positions of the two selected tiles in tiles_
+  game::Tile temp = tiles_[selected_[0].first][selected_[0].second];
+  tiles_[selected_[0].first][selected_[0].second] =
+      tiles_[selected_[1].first][selected_[1].second];
+  tiles_[selected_[1].first][selected_[1].second] = temp;
+  // Clear selected
+  selected_.clear();
+}
 
 bool Board::CanSelect(int row, int col) {
   if (row >= size_ || col >= size_ || selected_.size() == 2) {
