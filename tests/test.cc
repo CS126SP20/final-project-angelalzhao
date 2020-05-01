@@ -64,3 +64,42 @@ TEST_CASE("Set colors", "[board]") {
   REQUIRE(board.GetTileAt(0, 0).GetCorrectRow() == 0);
   REQUIRE(board.GetTileAt(0, 0).GetCorrectCol() == 0);
 }
+
+TEST_CASE("Select unmoveable tile", "[board]") {
+  const cinder::Color white = cinder::Color::white();
+  game::Board board;
+  board.SetSize(2);
+  board.SetColors(white, white, white, white);
+  REQUIRE(board.NumSelected() == 0);
+  SECTION("Try to select top left tile") {
+    board.Select(0, 0);
+    REQUIRE(board.NumSelected() == 0);
+  }
+  SECTION("Try to select bottom right tile") {
+    board.Select(board.GetSize() - 1, board.GetSize() - 1);
+  }
+}
+
+TEST_CASE("Select same tile twice", "[board]") {
+  const cinder::Color black = cinder::Color::black();
+  game::Board board;
+  board.SetSize(3);
+  board.SetColors(black, black, black, black);
+  board.Select(1, 0);
+  REQUIRE(board.NumSelected() == 1);
+  SECTION("Try to select the same tile again") {
+    board.Select(1, 0);
+    REQUIRE(board.NumSelected() == 1);
+  }
+}
+
+TEST_CASE("Try to select 3 tiles", "[board]") {
+  const cinder::Color black = cinder::Color::black();
+  game::Board board;
+  board.SetSize(1);
+  board.SetColors(black, black, black, black);
+  board.Select(0, 1);
+  board.Select(1, 0);
+  board.Select(1, 1);
+  REQUIRE(board.NumSelected() == 2);
+}

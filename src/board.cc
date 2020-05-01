@@ -86,4 +86,34 @@ void Board::CreateGradient() {
     }
   }
 }
+
+void Board::Select(int row, int col) {
+  if (!CanSelect(row, col)) {
+    return;
+  }
+  std::pair<int, int> tile_loc(row, col);
+  selected_.push_back(tile_loc);
+}
+
+int Board::NumSelected() { return selected_.size(); }
+
+bool Board::CanSelect(int row, int col) {
+  if (row >= size_ || col >= size_ || selected_.size() == 2) {
+    return false;
+  }
+  // Unmoveable tiles can't be selected
+  if (!tiles_[row][col].CanTileMove()) {
+    return false;
+  }
+  // We know the tile is moveable, so it is selectable if selected_ is empty
+  if (selected_.empty()) {
+    return true;
+  }
+  int selected_row = selected_[0].first;
+  int selected_col = selected_[0].second;
+  // Return true if the specified tile location is different than the already
+  // selected tile location
+  return selected_row != row || selected_col != col;
+}
+
 } // namespace game
