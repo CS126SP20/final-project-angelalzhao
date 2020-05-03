@@ -140,3 +140,12 @@ TEST_CASE("IsBoardSolved", "[board]") {
     REQUIRE(board.IsBoardSolved());
   }
 }
+
+TEST_CASE("Shuffling", "[board]") {
+  cinder::Color white = cinder::Color::white();
+  game::Board board;
+  board.SetSize(3);
+  board.SetColors(white, white, white, white);
+  board.Shuffle();
+  REQUIRE_FALSE(board.IsBoardSolved());
+}

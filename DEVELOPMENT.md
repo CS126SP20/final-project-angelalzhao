@@ -23,3 +23,4 @@
 
 - **4/30/20** Started work on generating and displaying colors
 - Generated and displayed gradient
+- Implemented tile swapping

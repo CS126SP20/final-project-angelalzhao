@@ -37,6 +37,8 @@ class Board {
   void Swap();
   // Checks if the board is solved (all tiles match with their correct location)
   bool IsBoardSolved();
+  // Shuffles the tiles at the beginning of the game
+  void Shuffle();
 
  private:
   // 2D vector of tiles representing the board's current state

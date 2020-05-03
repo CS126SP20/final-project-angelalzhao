@@ -33,6 +33,7 @@ void MyApp::update() {
     // Setting every corner color to white/gray for testing purposes
     std::vector<cinder::Color> colors = utils::GetRandomColors(4);
     board_.SetColors(colors[0], colors[1],colors[2], colors[3]);
+    board_.Shuffle();
     state_ = GameState::kPlaying;
   }
 }
@@ -44,7 +45,7 @@ void MyApp::draw() {
   if (state_ == GameState::kGameStart) {
     cinder::gl::clear();
   }
-  if (state_ == GameState::kPlaying) {
+  if (state_ == GameState::kPlaying || state_ == GameState::kGameEnded) {
     DrawBoard();
   }
 }
@@ -133,6 +134,9 @@ void MyApp::mouseDown(MouseEvent event) {
     board_.Select(row, col);
     if (board_.NumSelected() == 2) {
       board_.Swap();
+      if (board_.IsBoardSolved()) {
+        state_ = GameState::kGameEnded;
+      }
     }
   }
 }

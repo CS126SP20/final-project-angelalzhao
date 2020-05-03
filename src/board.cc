@@ -5,6 +5,9 @@
 #include "mylibrary/board.h"
 #include "mylibrary/utils.h"
 
+#include <cstdlib>
+#include <ctime>
+
 namespace game {
 
 Board::Board() {
@@ -138,5 +141,23 @@ bool Board::IsBoardSolved() {
     }
   }
   return true;
+}
+
+void Board::Shuffle() {
+  std::srand(std::time(nullptr));
+  int num_swaps = size_ * size_ / 2;
+  for (int i = 0; i < num_swaps; i++) {
+    while (NumSelected() < 2) {
+      // Generate random row/col to select
+      int rand_row = rand() % size_;
+      int rand_col = rand() % size_;
+      Select(rand_row, rand_col);
+    }
+    Swap();
+  }
+  // If the board ends up solved, reshuffle
+  if (IsBoardSolved()) {
+    Shuffle();
+  }
 }
 } // namespace game
