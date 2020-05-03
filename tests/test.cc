@@ -2,11 +2,13 @@
 
 #define CATCH_CONFIG_MAIN
 
-#include <catch2/catch.hpp>
-
-#include <mylibrary/tile.h>
-#include <mylibrary/board.h>
 #include <cinder/Color.h>
+#include <mylibrary/board.h>
+#include <mylibrary/tile.h>
+#include <mylibrary/utils.h>
+
+#include <catch2/catch.hpp>
+#include <iostream>
 #include <vector>
 
 TEST_CASE("Create default tile", "[tile]") {

@@ -7,6 +7,7 @@
 
 #include <cinder/Color.h>
 #include <vector>
+#include <string>
 
 namespace utils {
 // Generates a vector of the specified size of random colors
@@ -19,6 +20,8 @@ std::vector<cinder::Color> GetRandomColors(int num_colors);
 cinder::Color GetGradientColor(const cinder::Color& first,
                                const cinder::Color& second, int index,
                                int last_index);
+// Returns a string of the current date in the for dd/mm/yyyy
+std::string GetDate();
 
 } // namespace utils
 

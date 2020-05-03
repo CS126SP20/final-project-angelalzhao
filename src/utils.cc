@@ -6,6 +6,7 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <sstream>
 
 namespace utils {
 
@@ -41,6 +42,17 @@ cinder::Color GetGradientColor(const cinder::Color& first,
   // Create/return the new color
   cinder::Color color(new_r, new_g, new_b);
   return color;
+}
+
+std::string GetDate() {
+  // https://www.w3resource.com/cpp-exercises/basic/cpp-basic-exercise-34.php
+  time_t t = std::time(nullptr);
+  tm* t_ptr = localtime(&t);
+  std::string date = std::to_string(t_ptr->tm_mon + 1) + "/";
+  date.append(std::to_string(t_ptr->tm_mday));
+  date.append("/");
+  date.append(std::to_string(t_ptr->tm_year + 1900));
+  return date;
 }
 
 } // namespace utils
