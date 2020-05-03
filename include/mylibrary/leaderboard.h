@@ -8,6 +8,8 @@
 #include "leaderboard.h"
 
 #include <sqlite_modern_cpp.h>
+#include <string>
+#include <vector>
 
 namespace game {
 
@@ -15,6 +17,12 @@ class Leaderboard {
  public:
   // Initializes the database
   explicit Leaderboard(const std::string& db_path);
+
+  // Adds a score to the  leaderboard
+  void AddScoreToLeaderBoard(int score, int level, const std::string & date);
+
+  // Retrieves the top scores at the given level
+  std::vector<std::string> RetrieveHighScores(const size_t limit, int level);
 
  private:
   // Database containing scores/data from past games

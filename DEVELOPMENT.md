@@ -24,3 +24,7 @@
 - **4/30/20** Started work on generating and displaying colors
 - Generated and displayed gradient
 - Implemented tile swapping
+
+- **5/3/2020** Started working on leaderboard
+- Added score to leaderboard after every game
+- Implemented retrieving top scores for the level

@@ -18,10 +18,13 @@ namespace myapp {
 using cinder::app::KeyEvent;
 using cinder::app::MouseEvent;
 
+const size_t kLimit = 3;
+
 MyApp::MyApp()
   : leaderboard_{cinder::app::getAssetPath("game.db").string()},
     state_{GameState::kLevelSelect},
-    level_{0} {}
+    level_{0},
+    score_{0} {}
 
 void MyApp::setup() {
 }
@@ -35,6 +38,13 @@ void MyApp::update() {
     board_.SetColors(colors[0], colors[1],colors[2], colors[3]);
     board_.Shuffle();
     state_ = GameState::kPlaying;
+  }
+
+  if (state_ == GameState::kGameEnded) {
+    if (top_scores_.empty()) {
+      leaderboard_.AddScoreToLeaderBoard(score_, level_, utils::GetDate());
+      top_scores_ = leaderboard_.RetrieveHighScores(kLimit, level_);
+    }
   }
 }
 
@@ -134,6 +144,7 @@ void MyApp::mouseDown(MouseEvent event) {
     board_.Select(row, col);
     if (board_.NumSelected() == 2) {
       board_.Swap();
+      score_++;
       if (board_.IsBoardSolved()) {
         state_ = GameState::kGameEnded;
       }

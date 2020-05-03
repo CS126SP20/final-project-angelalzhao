@@ -6,6 +6,8 @@
 #include <mylibrary/leaderboard.h>
 #include <mylibrary/board.h>
 #include <cinder/app/App.h>
+#include <vector>
+#include <string>
 
 
 namespace myapp {
@@ -31,6 +33,8 @@ class MyApp : public cinder::app::App {
   int level_;
   GameState state_;
   game::Board board_;
+  int score_;
+  std::vector<std::string> top_scores_;
 
  private:
   void DrawBackground() const;
