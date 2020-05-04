@@ -28,3 +28,7 @@
 - **5/3/2020** Started working on leaderboard
 - Added score to leaderboard after every game
 - Implemented retrieving top scores for the level
+
+- **5/4/2020** Displayed the top scores
+- Displayed the average score
+- Added a sound effect for winning

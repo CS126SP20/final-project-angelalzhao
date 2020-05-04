@@ -28,6 +28,10 @@ MyApp::MyApp()
     time_ended_{0} {}
 
 void MyApp::setup() {
+  cinder::audio::SourceFileRef music_file =
+      cinder::audio::load(
+          cinder::app::loadAsset("win.mp3"));
+  win_sound_ = cinder::audio::Voice::create(music_file);
 }
 
 void MyApp::update() {
@@ -45,7 +49,7 @@ void MyApp::update() {
       leaderboard_.AddScoreToLeaderBoard(score_, level_, utils::GetDate());
       top_scores_ = leaderboard_.RetrieveHighScores(kLimit, level_);
     }
-    if (std::time(nullptr) - time_ended_ > 3) {
+    if (std::time(nullptr) - time_ended_ > 2) {
       state_ = GameState::kLeaderboard;
     }
   }
@@ -154,6 +158,7 @@ void MyApp::mouseDown(MouseEvent event) {
       score_++;
       if (board_.IsBoardSolved()) {
         time_ended_ = std::time(nullptr);
+        win_sound_->start();
         state_ = GameState::kGameEnded;
       }
     }

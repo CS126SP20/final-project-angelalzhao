@@ -6,6 +6,7 @@
 #include <mylibrary/leaderboard.h>
 #include <mylibrary/board.h>
 #include <cinder/app/App.h>
+#include <cinder/audio/audio.h>
 #include <vector>
 #include <string>
 
@@ -37,6 +38,7 @@ class MyApp : public cinder::app::App {
   int score_;
   std::vector<std::string> top_scores_;
   time_t time_ended_;
+  cinder::audio::VoiceRef win_sound_;
 
  private:
   void DrawBackground() const;
