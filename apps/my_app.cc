@@ -24,7 +24,8 @@ MyApp::MyApp()
   : leaderboard_{cinder::app::getAssetPath("game.db").string()},
     state_{GameState::kLevelSelect},
     level_{0},
-    score_{0} {}
+    score_{0},
+    time_ended_{0} {}
 
 void MyApp::setup() {
 }
@@ -33,7 +34,6 @@ void MyApp::update() {
   if (state_ == GameState::kGameStart) {
     board_.SetSize(level_);
     // TODO: Add random color generation logic here
-    // Setting every corner color to white/gray for testing purposes
     std::vector<cinder::Color> colors = utils::GetRandomColors(4);
     board_.SetColors(colors[0], colors[1],colors[2], colors[3]);
     board_.Shuffle();
@@ -45,18 +45,9 @@ void MyApp::update() {
       leaderboard_.AddScoreToLeaderBoard(score_, level_, utils::GetDate());
       top_scores_ = leaderboard_.RetrieveHighScores(kLimit, level_);
     }
-  }
-}
-
-void MyApp::draw() {
-  if (state_ == GameState::kLevelSelect) {
-    DrawMenu();
-  }
-  if (state_ == GameState::kGameStart) {
-    cinder::gl::clear();
-  }
-  if (state_ == GameState::kPlaying || state_ == GameState::kGameEnded) {
-    DrawBoard();
+    if (std::time(nullptr) - time_ended_ > 3) {
+      state_ = GameState::kLeaderboard;
+    }
   }
 }
 
@@ -80,6 +71,21 @@ void PrintText(const std::string& text, const cinder::Color& color,
   cinder::gl::draw(texture, locp);
 }
 
+void MyApp::draw() {
+  if (state_ == GameState::kLevelSelect) {
+    DrawMenu();
+  }
+  if (state_ == GameState::kGameStart) {
+    cinder::gl::clear();
+  }
+  if (state_ == GameState::kPlaying || state_ == GameState::kGameEnded) {
+    DrawBoard();
+  }
+  if (state_ == GameState::kLeaderboard) {
+    DrawTopScores();
+  }
+}
+
 void MyApp::DrawBackground() const {
 }
 
@@ -95,6 +101,7 @@ void MyApp::DrawMenu() {
   } else {
     PrintText("1: easy", white, size, {center.x, center.y - 100});
   }
+
   if (level_ == 2) {
     PrintText("2: medium", gray, size, center);
   } else {
@@ -146,9 +153,21 @@ void MyApp::mouseDown(MouseEvent event) {
       board_.Swap();
       score_++;
       if (board_.IsBoardSolved()) {
+        time_ended_ = std::time(nullptr);
         state_ = GameState::kGameEnded;
       }
     }
+  }
+}
+void MyApp::DrawTopScores() {
+  const cinder::vec2 center = getWindowCenter();
+  const cinder::ivec2 size = {500, 50};
+  const cinder::Color black = cinder::Color::black();
+  PrintText("top scores", black, size, center);
+  int row = 1;
+  for (const std::string& score : top_scores_) {
+    PrintText(score, black, size, {center.x, center.y + 100 * row});
+    row++;
   }
 }
 

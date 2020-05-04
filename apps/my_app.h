@@ -17,6 +17,7 @@ enum class GameState {
   kGameStart,
   kPlaying,
   kGameEnded,
+  kLeaderboard,
 };
 
 class MyApp : public cinder::app::App {
@@ -35,11 +36,13 @@ class MyApp : public cinder::app::App {
   game::Board board_;
   int score_;
   std::vector<std::string> top_scores_;
+  time_t time_ended_;
 
  private:
   void DrawBackground() const;
   void DrawMenu();
   void DrawBoard();
+  void DrawTopScores();
 };
 
 }  // namespace myapp
