@@ -43,4 +43,12 @@ std::vector<std::string> Leaderboard::RetrieveHighScores(const size_t limit,
   return GetScores(&rows);
 }
 
+int Leaderboard::GetAverageScore(int level) {
+  int average = 0;
+  db_ << "SELECT avg(score) FROM leaderboard WHERE level = ?;"
+      << level
+      >> average;
+  return average;
+}
+
 } // namespace game

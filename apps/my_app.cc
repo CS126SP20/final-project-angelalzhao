@@ -159,10 +159,17 @@ void MyApp::mouseDown(MouseEvent event) {
     }
   }
 }
+
 void MyApp::DrawTopScores() {
   const cinder::vec2 center = getWindowCenter();
   const cinder::ivec2 size = {500, 50};
   const cinder::Color black = cinder::Color::black();
+  PrintText("you won!", black, size, {center.x, center.y - 300});
+  PrintText("your score: " + std::to_string(score_), black, size,
+      {center.x, center.y - 200});
+  int average = leaderboard_.GetAverageScore(level_);
+  PrintText("average score: " + std::to_string(average), black, size,
+      {center.x, center.y - 100});
   PrintText("top scores", black, size, center);
   int row = 1;
   for (const std::string& score : top_scores_) {

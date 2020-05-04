@@ -24,6 +24,9 @@ class Leaderboard {
   // Retrieves the top scores at the given level
   std::vector<std::string> RetrieveHighScores(const size_t limit, int level);
 
+  // Returns the average score for the given level
+  int GetAverageScore(int level);
+
  private:
   // Database containing scores/data from past games
   sqlite::database db_;
