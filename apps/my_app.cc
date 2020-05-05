@@ -19,9 +19,16 @@ using cinder::app::KeyEvent;
 using cinder::app::MouseEvent;
 
 const size_t kLimit = 3;
+const char kDbPath[] = "game.db";
+const char kSoundPath[] = "win.mp3";
+#if defined(CINDER_LINUX)
+const char kNormalFont[] = "Arial Unicode MS";
+#else
+const char kNormalFont[] = "Arial";
+#endif
 
 MyApp::MyApp()
-  : leaderboard_{cinder::app::getAssetPath("game.db").string()},
+  : leaderboard_{cinder::app::getAssetPath(kDbPath).string()},
     state_{GameState::kLevelSelect},
     level_{0},
     score_{0},
@@ -29,15 +36,13 @@ MyApp::MyApp()
 
 void MyApp::setup() {
   cinder::audio::SourceFileRef music_file =
-      cinder::audio::load(
-          cinder::app::loadAsset("win.mp3"));
+      cinder::audio::load(cinder::app::loadAsset(kSoundPath));
   win_sound_ = cinder::audio::Voice::create(music_file);
 }
 
 void MyApp::update() {
   if (state_ == GameState::kGameStart) {
     board_.SetSize(level_);
-    // TODO: Add random color generation logic here
     std::vector<cinder::Color> colors = utils::GetRandomColors(4);
     board_.SetColors(colors[0], colors[1],colors[2], colors[3]);
     board_.Shuffle();
@@ -49,6 +54,7 @@ void MyApp::update() {
       leaderboard_.AddScoreToLeaderBoard(score_, level_, utils::GetDate());
       top_scores_ = leaderboard_.RetrieveHighScores(kLimit, level_);
     }
+    // Display leaderboard after sound effect finishes
     if (std::time(nullptr) - time_ended_ > 2) {
       state_ = GameState::kLeaderboard;
     }
@@ -63,7 +69,7 @@ void PrintText(const std::string& text, const cinder::Color& color,
 
   auto box = cinder::TextBox()
       .alignment(cinder::TextBox::CENTER)
-      .font(cinder::Font("Arial", 50))
+      .font(cinder::Font(kNormalFont, 50))
       .size(size)
       .color(color)
       .text(text);
@@ -86,11 +92,9 @@ void MyApp::draw() {
     DrawBoard();
   }
   if (state_ == GameState::kLeaderboard) {
+    DrawBoard();
     DrawTopScores();
   }
-}
-
-void MyApp::DrawBackground() const {
 }
 
 void MyApp::DrawMenu() {
@@ -99,29 +103,19 @@ void MyApp::DrawMenu() {
   const cinder::ColorA white = cinder::Color::white();
   const cinder::ColorA gray = cinder::Color::gray(0.75);
 
-  // TODO: Refactor to decrease amount of repeated code
-  if (level_ == 1) {
-    PrintText("1: easy", gray, size,{center.x, center.y - 100});
-  } else {
-    PrintText("1: easy", white, size, {center.x, center.y - 100});
-  }
+  const cinder::Color l1_color = (level_ == 1) ? gray : white;
+  const cinder::Color l2_color = (level_ == 2) ? gray : white;
+  const cinder::Color l3_color = (level_ == 3) ? gray : white;
 
-  if (level_ == 2) {
-    PrintText("2: medium", gray, size, center);
-  } else {
-    PrintText("2: medium", white, size, center);
-  }
-
-  if (level_ == 3) {
-    PrintText("3: hard", gray, size,{center.x, center.y + 100});
-  } else {
-    PrintText("3: hard", white, size, {center.x, center.y + 100});
-  }
+  PrintText("1: easy", l1_color, size,{center.x, center.y - 100});
+  PrintText("2: medium", l2_color, size, center);
+  PrintText("3: hard", l3_color, size,{center.x, center.y + 100});
 }
 
 void MyApp::DrawBoard() {
   int tile_width = getWindowWidth() / board_.GetSize();
   int tile_height = getWindowHeight() / board_.GetSize();
+  // Drawing each tile at its current position
   for (int row = 0; row < board_.GetSize(); row++) {
     for (int col = 0; col < board_.GetSize(); col++) {
       game::Tile current_tile = board_.GetTileAt(row, col);
@@ -136,10 +130,10 @@ void MyApp::DrawBoard() {
 
 void MyApp::keyDown(KeyEvent event) {
   if (state_ == GameState::kLevelSelect) {
-    // TODO: Get rid of magic numbers? Declare as constants somewhere
     if (event.getChar() >= '1' && event.getChar() <= '3') {
       level_ = event.getChar() - '0';
     }
+
     if (event.getCode() == KeyEvent::KEY_s && level_ != 0) {
       state_ = GameState::kGameStart;
     }
@@ -150,12 +144,15 @@ void MyApp::mouseDown(MouseEvent event) {
   if (state_ == GameState::kPlaying) {
     int tile_width = getWindowWidth() / board_.GetSize();
     int tile_height = getWindowHeight() / board_.GetSize();
+
     int row = event.getY() / tile_height;
     int col = event.getX() / tile_width;
     board_.Select(row, col);
+
     if (board_.NumSelected() == 2) {
       board_.Swap();
       score_++;
+
       if (board_.IsBoardSolved()) {
         time_ended_ = std::time(nullptr);
         win_sound_->start();
@@ -169,12 +166,14 @@ void MyApp::DrawTopScores() {
   const cinder::vec2 center = getWindowCenter();
   const cinder::ivec2 size = {500, 50};
   const cinder::Color black = cinder::Color::black();
+
   PrintText("you won!", black, size, {center.x, center.y - 300});
   PrintText("your score: " + std::to_string(score_), black, size,
       {center.x, center.y - 200});
   int average = leaderboard_.GetAverageScore(level_);
   PrintText("average score: " + std::to_string(average), black, size,
       {center.x, center.y - 100});
+
   PrintText("top scores", black, size, center);
   int row = 1;
   for (const std::string& score : top_scores_) {
