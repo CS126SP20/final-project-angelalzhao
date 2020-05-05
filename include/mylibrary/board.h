@@ -16,27 +16,36 @@ class Board {
  public:
   // Default constructor
   Board();
+
   // Sets the size of the board based on difficulty (level must be positive)
   void SetSize(int level);
+
   // Sets the corner tiles based on the colors passed in
   // Creates new tiles arranged in the correct gradient pattern
   void SetColors(const cinder::Color& top_left, const cinder::Color& top_right,
                 const cinder::Color& bottom_right,
                 const cinder::Color& bottom_left);
+
   // Returns the size of the board
   int GetSize() const;
+
   // Returns the tile at the specified location (row, col must >= 0)
   game::Tile GetTileAt(int row, int col) const;
+
   // Selects the tile at the specified location (if possible) by adding its
   // current row/column to selected_
   void Select(int row, int col);
+
   // Returns the number of tiles selected (should be no more than 2)
   int NumSelected() const;
+
   // Swaps the two selected tiles (should only be called when two tiles are
   // selected)
   void Swap();
+
   // Checks if the board is solved (all tiles match with their correct location)
   bool IsBoardSolved();
+
   // Shuffles the tiles at the beginning of the game
   void Shuffle();
 
@@ -56,6 +65,6 @@ class Board {
   bool CanSelect(int row, int col);
 };
 
-}
+} // namespace game
 
 #endif  // FINALPROJECT_BOARD_H

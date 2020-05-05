@@ -78,7 +78,6 @@ void Board::CreateGradient() {
   }
   // Creating/placing the rest of the tiles
   for (int col = 1; col < size_ - 1; col++) {
-
     for (int row = 0; row < size_; row++) {
       cinder::Color left_color = tiles_[row][0].GetColor();
       cinder::Color right_color = tiles_[row][size_ - 1].GetColor();
@@ -147,6 +146,7 @@ void Board::Shuffle() {
   std::srand(std::time(nullptr));
   int num_swaps = size_ * size_ / 2;
   for (int i = 0; i < num_swaps; i++) {
+    // Try selecting random tiles until two are selected so we can swap
     while (NumSelected() < 2) {
       // Generate random row/col to select
       int rand_row = rand() % size_;

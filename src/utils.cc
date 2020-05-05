@@ -13,6 +13,7 @@ namespace utils {
 std::vector<cinder::Color> GetRandomColors(int num_colors) {
   std::vector<cinder::Color> colors;
   std::srand(std::time(nullptr));
+
   for (int i = 0; i < num_colors; i++) {
     // https://stackoverflow.com/questions/686353/random-float-number-generation
     float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
@@ -21,6 +22,7 @@ std::vector<cinder::Color> GetRandomColors(int num_colors) {
     cinder::Color color(r, g, b);
     colors.push_back(color);
   }
+
   return colors;
 }
 
@@ -48,10 +50,12 @@ std::string GetDate() {
   // https://www.w3resource.com/cpp-exercises/basic/cpp-basic-exercise-34.php
   time_t t = std::time(nullptr);
   tm* t_ptr = localtime(&t);
+
   std::string date = std::to_string(t_ptr->tm_mon + 1) + "/";
   date.append(std::to_string(t_ptr->tm_mday));
   date.append("/");
   date.append(std::to_string(t_ptr->tm_year + 1900));
+
   return date;
 }
 

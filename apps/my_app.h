@@ -31,17 +31,24 @@ class MyApp : public cinder::app::App {
   void mouseDown(cinder::app::MouseEvent) override;
 
  private:
+  // Leaderboard object that adds scores, retrieves scores, gets average score
   game::Leaderboard leaderboard_;
+  // Difficulty level chosen at the start of the game (1 is easy, 3 is hard)
   int level_;
+  // The current state/phase of the game
   GameState state_;
+  // Represents the game board
   game::Board board_;
+  // The number of moves the player made in the game
   int score_;
+  // Stores the top scores at the current level in the form "[score] - [date]"
   std::vector<std::string> top_scores_;
+  // The time that the player won the game
   time_t time_ended_;
+  // Sound effect to be played when the player wins
   cinder::audio::VoiceRef win_sound_;
 
  private:
-  void DrawBackground() const;
   void DrawMenu();
   void DrawBoard();
   void DrawTopScores();
