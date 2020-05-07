@@ -41,6 +41,6 @@ score, the average score, and the top scores will be displayed on screen.
 
 Solved board examples: 
 
-![Medium](resources/medium.png?raw=true "Medium")
+![Medium](resources/medium.PNG?raw=true "Medium")
 
-![Hard](resources/hard.png?raw=true "Hard")
+![Hard](resources/hard.PNG?raw=true "Hard")
