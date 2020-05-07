@@ -87,19 +87,6 @@ if(NOT catch2_POPULATED)
 endif()
 
 # Add more CMake libraries here ...
-FetchContent_Declare(
-        httprequest
-        GIT_REPOSITORY https://github.com/elnormous/HTTPRequest.git
-        GIT_TAG
-)
-
-FetchContent_GetProperties(httprequest)
-if(NOT httprequest_POPULATED)
-    FetchContent_Populate(httprequest)
-    # This is overkill since we only need a single file. Though it is a clean solution.
-    add_library(httprequest INTERFACE)
-    target_include_directories(httprequest INTERFACE ${httprequest_SOURCE_DIR}/include)
-endif()
 
 FetchContent_Declare(
         sqlite-modern-cpp

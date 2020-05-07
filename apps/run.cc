@@ -4,7 +4,6 @@
 #include <cinder/app/RendererGl.h>
 
 #include "my_app.h"
-#include <sqlite_modern_cpp.h>
 
 
 using cinder::app::App;
